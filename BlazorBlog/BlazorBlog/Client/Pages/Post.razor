@@ -1,0 +1,28 @@
+﻿@page "/posts/{url}"
+@using BlazorBlog.Shared
+@inject BlazorBlog.Client.Services.IBlogService BlogService
+
+<div class="card">
+    <div class="card-header">
+        Featured
+    </div>
+    <div class="card-body">
+        <h5 class="card-title">@CurrentPost.Title</h5>
+        <p class="card-text">@CurrentPost.Description</p>
+        <p class="card-text">@CurrentPost.Content</p>
+        @* <a href="#" class="btn btn-primary">Go somewhere</a> *@
+    </div>
+</div>
+
+@code {
+    private BlogPost CurrentPost;
+
+    [Parameter]
+    public string Url { get; set; }
+
+    protected override Task OnInitializedAsync()
+    {
+        CurrentPost = BlogService.GetBlogPost(Url);
+        return base.OnInitializedAsync();
+    }
+}
