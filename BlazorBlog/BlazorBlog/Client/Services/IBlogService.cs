@@ -4,8 +4,8 @@ namespace BlazorBlog.Client.Services
 {
     public interface IBlogService
     {
-        List<BlogPost> GetBlogPosts();
+        Task<List<BlogPost>> GetBlogPosts();
 
-        BlogPost GetBlogPost(string url);
+        Task<BlogPost> GetBlogPost(string url);
     }
 }
