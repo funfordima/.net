@@ -1,0 +1,33 @@
+﻿@using BlazorBlog.Shared
+
+<h3>BlogPosts</h3>
+
+<div class="card-deck">
+    @foreach(var post in Posts)
+        {
+    <div class="card mb-4">
+                @* <img class="card-img-top" src="..." alt="Card image cap"> *@
+                <div class="card-body">
+                    <h5 class="card-title">@post.Title</h5>
+                    <p class="card-text">@post.Description</p>
+                    @* <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p> *@
+                </div>
+            </div>
+        }
+</div>
+
+@code {
+    public List<BlogPost> Posts { get; set; } = new List<BlogPost>()
+    {
+        new BlogPost
+        {
+            Title = "A new tuttorial about Blazor",
+            Description = "This is a new tutorial, showing you how to build a blog with Blazor",
+        },
+        new BlogPost
+        {
+            Title = "My first blog post",
+            Description = "Hi! This is my new shiny blog. Enjoy!",
+        },
+    }; 
+}
