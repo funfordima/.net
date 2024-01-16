@@ -1,4 +1,5 @@
-﻿using BlazorBlog.Shared;
+﻿using BlazorBlog.Server.Data;
+using BlazorBlog.Shared;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -25,17 +26,23 @@ namespace BlazorBlog.Server.Controllers
                 Content = "Sed risus pretium quam vulputate dignissim suspendisse in. Mi eget mauris pharetra et. Sagittis nisl rhoncus mattis rhoncus. Erat velit scelerisque in dictum non consectetur a. Cursus mattis molestie a iaculis. Elementum nisi quis eleifend quam adipiscing vitae proin sagittis. Nulla porttitor massa id neque aliquam. Quis viverra nibh cras pulvinar mattis nunc sed. Convallis posuere morbi leo urna. Gravida rutrum quisque non tellus orci ac auctor augue. Dapibus ultrices in iaculis nunc sed augue lacus viverra. Arcu felis bibendum ut tristique et egestas quis. Lectus urna duis convallis convallis tellus id interdum velit.",
             },
         };
+        public DataContext _context { get; }
+
+        public BlogController(DataContext context)
+        {
+            _context = context;
+        }
 
         [HttpGet]
         public ActionResult<List<BlogPost>> GetBlogPosts()
         {
-            return Ok(Posts);
+            return Ok(_context.BlogPosts);
         }
 
         [HttpGet("{url}")]
         public ActionResult<BlogPost> GetBlogPost(string Url)
         {
-            var post = Posts.FirstOrDefault((p) => p.Url.ToLower().Equals(Url.ToLower()));
+            var post = _context.BlogPosts.FirstOrDefault((p) => p.Url.ToLower().Equals(Url.ToLower()));
 
             if (post == null)
             {
