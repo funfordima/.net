@@ -1,0 +1,63 @@
+﻿@page "/create"
+@using BlazorBlog.Shared
+@inject BlazorBlog.Client.Services.IBlogService BlogService
+@inject NavigationManager NavigationManager
+
+<h3>Create a new Blog Post</h3>
+
+<EditForm Model="@newBlogPost" OnValidSubmit="CreateNewBlogPost">
+    <DataAnnotationsValidator />
+    <div class="form-group">
+        <label class="mb-2" for="title">Title</label>
+        <InputText id="title" class="form-control mb-2" @bind-Value="newBlogPost.Title" />
+
+        <ValidationMessage For="@(() => newBlogPost.Title)" />
+    </div>
+
+    <div class="form-group">
+        <label class="mb-2" for="url">Url</label>
+        <InputText id="url" class="form-control mb-2" @bind-Value="newBlogPost.Url" />
+
+        <ValidationMessage For="@(() => newBlogPost.Url)" />
+    </div>
+
+    <div class="form-group">
+        <label class="mb-2" for="description">Description</label>
+        <InputText id="description" class="form-control mb-2" @bind-Value="newBlogPost.Description" />
+    </div>
+
+    <div class="form-group">
+        <label class="mb-2" for="author">Author</label>
+        <InputText id="author" class="form-control mb-2" @bind-Value="newBlogPost.Author" />
+    </div>
+
+    <div class="form-group">
+        <label class="mb-2" for="content">Content</label>
+        <InputTextArea id="content" class="form-control mb-2" @bind-Value="newBlogPost.Content" />
+    </div>
+
+    <div class="form-group">
+        <label class="mb-2" for="date">Date</label>
+        <InputDate id="date" class="form-control mb-2" @bind-Value="newBlogPost.DateCreated" />
+    </div>
+
+    <div class="form-check">
+        <label class="mb-2" for="isPublished">Publish</label>
+        <InputCheckbox id="isPublished" class="form-check-input mb-2" @bind-Value="newBlogPost.IsPublished" />
+    </div>
+
+    <ValidationSummary />
+
+    <button type="submit" class="btn btn-primary">Create</button>
+</EditForm>
+
+@code {
+    BlogPost newBlogPost = new BlogPost();
+
+    async Task CreateNewBlogPost()
+    {
+        var result = await BlogService.CreateBlogPost(newBlogPost);
+
+        NavigationManager.NavigateTo($"posts/{result.Url}");
+    }
+}
