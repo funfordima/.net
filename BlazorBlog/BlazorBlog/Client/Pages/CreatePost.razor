@@ -21,6 +21,11 @@
         <ValidationMessage For="@(() => newBlogPost.Url)" />
     </div>
 
+    <div class="form-control-file">
+        <label for="image">Image</label>
+        <InputFile OnChange="OnFileChange"/>
+    </div>
+
     <div class="form-group">
         <label class="mb-2" for="description">Description</label>
         <InputText id="description" class="form-control mb-2" @bind-Value="newBlogPost.Description" />
@@ -59,5 +64,17 @@
         var result = await BlogService.CreateBlogPost(newBlogPost);
 
         NavigationManager.NavigateTo($"posts/{result.Url}");
+    }
+
+    async Task OnFileChange(InputFileChangeEventArgs e)
+    {
+        var format = "image/png";
+        var resizedImage = await e.File.RequestImageFileAsync(format, 300, 300);
+        var buffer = new byte[resizedImage.Size];
+        await resizedImage.OpenReadStream().ReadAsync(buffer);
+        var imageData = $"data:{format};base64,{Convert.ToBase64String(buffer)}";
+        newBlogPost.Image = imageData;
+
+        
     }
 }

@@ -7,7 +7,7 @@
     @foreach(var post in Posts)
         {
     <div class="card mb-4">
-                @* <img class="card-img-top" src="..." alt="Card image cap"> *@
+                <img src="@post.Image" alt="Card image cap" width="200">
                 <div class="card-body">
                     <h5 class="card-title">@post.Title</h5>
                     <p class="card-text">@post.Description</p>
