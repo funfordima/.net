@@ -1,0 +1,41 @@
+﻿@using BlazorBlog.Shared
+@inject BlazorBlog.Client.Services.IBlogService BlogService
+
+<h3>BlogPosts</h3>
+
+<div class="card-deck">
+    @foreach(var post in Posts)
+        {
+            <div class="card mb-4">
+                <img src="@getImageSource(@post.Image)"
+                    alt="Card image cap" 
+                    width="200"
+                >
+                <div class="card-body">
+                    <h5 class="card-title">@post.Title</h5>
+                    <p class="card-text">@post.Description</p>
+                    <p class="card-text">@post.Content</p>
+                    <p class="card-text">
+                        <small class="text-muted">@post.DateCreated.ToLongDateString()</small>
+                    </p>
+                    <a class="card-link" href="/posts/@post.Url">Read more...</a>
+                </div>
+            </div>
+        }
+</div>
+
+@code {
+    private List<BlogPost> Posts { get; set; } = new List<BlogPost>();
+
+    public string placeholderImage = "/images/placeholder.png";
+
+    protected override async Task OnInitializedAsync()
+    {
+    Posts = await BlogService.GetBlogPosts();
+    }
+
+    public string getImageSource(string? url)
+    {
+        return (url is not null && url != "") ? url : placeholderImage;
+    }
+}
