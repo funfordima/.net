@@ -58,7 +58,7 @@ namespace EmployeeManagement.Api.Controllers
                     return BadRequest();
                 }
 
-                var emp = employeeRepository.GetEmployeeByEmail(employee.Email);
+                var emp = await employeeRepository.GetEmployeeByEmail(employee.Email);
 
                 if (emp != null)
                 {
@@ -77,20 +77,15 @@ namespace EmployeeManagement.Api.Controllers
             }
         }
 
-        [HttpPut("{employeeId:int}")]
-        public async Task<ActionResult<Employee>> UpdateEmployee(int employeeId, Employee employee)
+        [HttpPut]
+        public async Task<ActionResult<Employee>> UpdateEmployee(Employee employee)
         {
             try
             {
-                if (employeeId != employee.EmployeeId)
-                {
-                    return BadRequest("Employee ID mistmatch.");
-                }
-
-                var employeeToUpdate = await employeeRepository.GetEmployee(employeeId);
+                var employeeToUpdate = await employeeRepository.GetEmployee(employee.EmployeeId);
                 if (employeeToUpdate == null)
                 {
-                    return NotFound($"Employee with ID = {employeeId} not found.");
+                    return NotFound($"Employee with ID = {employee.EmployeeId} not found.");
                 }
 
                 return await employeeRepository.UpdateEmployee(employee);

@@ -1,0 +1,23 @@
+﻿@inherits DisplayEmployeeBase
+
+<div class="card m-3" style="min-width: 18rem; max-width: 30.5%;">
+    <div class="card-header">
+        <h3>
+            <input type="checkbox" @onchange="handleCheckboxChange" />
+            @Employee.FirstName @Employee.LastName
+        </h3>
+    </div>
+
+    <img class="card-img-top imageThumbnail" src="@Employee.PhotoPath" />
+
+    @if (ShowFooter)
+    {
+        <div class="card-footer text-center">
+            <a href="@($"employee-details/{Employee.EmployeeId}")" class="btn btn-primary m-1">View</a>
+            <a href="@($"/edit-employee/{Employee.EmployeeId}")" class="btn btn-primary m-1">Edit</a>
+            <button class="btn btn-danger m-1" @onclick="handleDelete">Delete</button>
+        </div>
+    }
+</div>
+
+<Confirm @ref="DeleteConfirmation" ConfirmationChanged="ConfirmDelete"></Confirm>

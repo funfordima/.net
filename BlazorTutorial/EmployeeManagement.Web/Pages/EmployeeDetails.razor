@@ -1,0 +1,38 @@
+﻿@page "/employee-details/{id}"
+@page "/employee-details"
+
+@if (employee == null)
+{
+    <div class="spinner"></div>
+}
+else
+{
+    <div class="row justify-content-center m-3">
+        <div class="col-sm-8">
+            <div class="card">
+                <div class="card-header">
+                <h2>@employee.FirstName @employee.LastName @Coordinates</h2>
+                </div>
+
+                <div class="card-body text-center">
+                <img src="@employee.PhotoPath" alt="Employee image" class="card-img-top" @onmousemove="@(e => Coordinates = $"X = {e.ClientX} Y = {e.ClientY}")" />
+
+                    <h4>Employee ID: @employee.EmployeeId</h4>
+                    <h4>Email: @employee.Email</h4>
+                    <h4>Department: @(employee.Department == null ? "N/A" :employee.Department.DepartmentName)</h4>
+
+                <button class="btn btn-primary" @onclick="@handleButtonClick">@ButtonText</button>
+                </div>
+
+                <div class="card-footer text-center @CssClass">
+                    <a href="/" class="btn btn-primary">Back</a>
+                    <a href="@($"/edit-employee/{employee.EmployeeId}")" class="btn btn-primary">Edit</a>
+                    <a href="#" class="btn btn-danger">Delete</a>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+
+

@@ -1,14 +1,10 @@
-﻿using EmploeeManagement.Models.CustomValidators;
-using System;
-using System.Collections.Generic;
+﻿using EmploeeManagement.Models;
+using EmploeeManagement.Models.CustomValidators;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace EmploeeManagement.Models
+namespace EmployeeManagement.Web.Models
 {
-    public class Employee
+    public class EditEmployeeModel
     {
         public int EmployeeId { get; set; }
         [Required]
@@ -19,10 +15,13 @@ namespace EmploeeManagement.Models
         [EmailAddress]
         [EmailDomainValidator(AllowedDomain = "pragimtech.com", ErrorMessage = $"Only pragimtech.com is allowed.")]
         public string Email { get; set; }
+        [CompareProperty("Email", ErrorMessage = "Email and Confirm Email must match.")]
+        public string ConfirmEmail { get; set; }
         public DateTime DateOfBirth { get; set; }
         public Gender Gender { get; set; }
         public int DepartmentId { get; set; }
         public string PhotoPath { get; set; }
-        public Department Department { get; set; }
+        [ValidateComplexType]
+        public Department Department { get; set; } = new Department();
     }
 }
