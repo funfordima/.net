@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Components;
 
 namespace EmployeeManagement.Web.Shared
 {
-    public partial class Confirm
+    public partial class Confirm : ComponentBase
     {
         public bool ShowConfirmation { get; set; }
 

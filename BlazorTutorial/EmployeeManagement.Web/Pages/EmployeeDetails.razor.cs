@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Components.Web;
 
 namespace EmployeeManagement.Web.Pages
 {
-    public partial class EmployeeDetails
+    public partial class EmployeeDetails : ComponentBase
     {
         public Employee employee { get; set; } = new Employee();
         public string Coordinates { get; set; }
